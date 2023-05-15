@@ -5,6 +5,7 @@
 
 import type { BinaryReadOptions, FieldList, JsonReadOptions, JsonValue, PartialMessage, PlainMessage } from "@bufbuild/protobuf";
 import { Message, proto3 } from "@bufbuild/protobuf";
+import { immerable } from "immer";
 
 /**
  * @generated from enum mission.v1.Termination
@@ -455,7 +456,8 @@ export class SendMissionRequest extends Message<SendMissionRequest> {
   /**
    * @generated from field: repeated mission.v1.SequenceItem sequence_items = 4;
    */
-  sequenceItems: SequenceItem[] = [];
+	sequenceItems: SequenceItem[] = [];
+	[immerable] = true;
 
   constructor(data?: PartialMessage<SendMissionRequest>) {
     super();
