@@ -3,7 +3,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { SendMissionRequest, SendMissionResult } from "./mission_pb.ts";
+import { SendMissionRequest, SendMissionResponse } from "./mission_pb.ts";
 import { MethodKind } from "@bufbuild/protobuf";
 
 /**
@@ -20,7 +20,7 @@ export const MissionService = {
     sendMission: {
       name: "SendMission",
       I: SendMissionRequest,
-      O: SendMissionResult,
+      O: SendMissionResponse,
       kind: MethodKind.Unary,
     },
   }

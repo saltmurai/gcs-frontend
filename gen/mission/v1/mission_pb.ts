@@ -5,26 +5,31 @@
 
 import type { BinaryReadOptions, FieldList, JsonReadOptions, JsonValue, PartialMessage, PlainMessage } from "@bufbuild/protobuf";
 import { Message, proto3 } from "@bufbuild/protobuf";
-import { immerable } from "immer";
 
 /**
  * @generated from enum mission.v1.Termination
  */
 export enum Termination {
   /**
-   * @generated from enum value: TERMINATION_AUTO = 0;
+   * @generated from enum value: TERMINATION_UNSPECIFIED = 0;
    */
-  AUTO = 0,
+  UNSPECIFIED = 0,
 
   /**
-   * @generated from enum value: TERMINATION_STD = 1;
+   * @generated from enum value: TERMINATION_AUTO = 1;
    */
-  STD = 1,
+  AUTO = 1,
+
+  /**
+   * @generated from enum value: TERMINATION_STD = 2;
+   */
+  STD = 2,
 }
 // Retrieve enum metadata with: proto3.getEnumType(Termination)
 proto3.util.setEnumType(Termination, "mission.v1.Termination", [
-  { no: 0, name: "TERMINATION_AUTO" },
-  { no: 1, name: "TERMINATION_STD" },
+  { no: 0, name: "TERMINATION_UNSPECIFIED" },
+  { no: 1, name: "TERMINATION_AUTO" },
+  { no: 2, name: "TERMINATION_STD" },
 ]);
 
 /**
@@ -32,49 +37,55 @@ proto3.util.setEnumType(Termination, "mission.v1.Termination", [
  */
 export enum Action {
   /**
-   * @generated from enum value: ACTION_TAKEOFF = 0;
+   * @generated from enum value: ACTION_UNSPECIFIED = 0;
    */
-  TAKEOFF = 0,
+  UNSPECIFIED = 0,
 
   /**
-   * @generated from enum value: ACTION_DISARM = 1;
+   * @generated from enum value: ACTION_TAKEOFF = 1;
    */
-  DISARM = 1,
+  TAKEOFF = 1,
 
   /**
-   * @generated from enum value: ACTION_SELFCHECK = 2;
+   * @generated from enum value: ACTION_DISARM = 2;
    */
-  SELFCHECK = 2,
+  DISARM = 2,
 
   /**
-   * @generated from enum value: ACTION_RELEASE = 3;
+   * @generated from enum value: ACTION_SELFCHECK = 3;
    */
-  RELEASE = 3,
+  SELFCHECK = 3,
 
   /**
-   * @generated from enum value: ACTION_RTLHOME = 4;
+   * @generated from enum value: ACTION_RELEASE = 4;
    */
-  RTLHOME = 4,
+  RELEASE = 4,
 
   /**
-   * @generated from enum value: ACTION_HOLD = 5;
+   * @generated from enum value: ACTION_RTLHOME = 5;
    */
-  HOLD = 5,
+  RTLHOME = 5,
 
   /**
-   * @generated from enum value: ACTION_AUTOLAND = 6;
+   * @generated from enum value: ACTION_HOLD = 6;
    */
-  AUTOLAND = 6,
+  HOLD = 6,
+
+  /**
+   * @generated from enum value: ACTION_AUTOLAND = 7;
+   */
+  AUTOLAND = 7,
 }
 // Retrieve enum metadata with: proto3.getEnumType(Action)
 proto3.util.setEnumType(Action, "mission.v1.Action", [
-  { no: 0, name: "ACTION_TAKEOFF" },
-  { no: 1, name: "ACTION_DISARM" },
-  { no: 2, name: "ACTION_SELFCHECK" },
-  { no: 3, name: "ACTION_RELEASE" },
-  { no: 4, name: "ACTION_RTLHOME" },
-  { no: 5, name: "ACTION_HOLD" },
-  { no: 6, name: "ACTION_AUTOLAND" },
+  { no: 0, name: "ACTION_UNSPECIFIED" },
+  { no: 1, name: "ACTION_TAKEOFF" },
+  { no: 2, name: "ACTION_DISARM" },
+  { no: 3, name: "ACTION_SELFCHECK" },
+  { no: 4, name: "ACTION_RELEASE" },
+  { no: 5, name: "ACTION_RTLHOME" },
+  { no: 6, name: "ACTION_HOLD" },
+  { no: 7, name: "ACTION_AUTOLAND" },
 ]);
 
 /**
@@ -82,14 +93,19 @@ proto3.util.setEnumType(Action, "mission.v1.Action", [
  */
 export enum Planner {
   /**
-   * @generated from enum value: PLANNER_EGO = 0;
+   * @generated from enum value: PLANNER_UNSPECIFIED = 0;
    */
-  EGO = 0,
+  UNSPECIFIED = 0,
 
   /**
-   * @generated from enum value: PLANNER_FAST = 1;
+   * @generated from enum value: PLANNER_EGO = 1;
    */
-  FAST = 1,
+  EGO = 1,
+
+  /**
+   * @generated from enum value: PLANNER_FAST = 2;
+   */
+  FAST = 2,
 
   /**
    * @generated from enum value: PLANNER_MARKER = 3;
@@ -103,8 +119,9 @@ export enum Planner {
 }
 // Retrieve enum metadata with: proto3.getEnumType(Planner)
 proto3.util.setEnumType(Planner, "mission.v1.Planner", [
-  { no: 0, name: "PLANNER_EGO" },
-  { no: 1, name: "PLANNER_FAST" },
+  { no: 0, name: "PLANNER_UNSPECIFIED" },
+  { no: 1, name: "PLANNER_EGO" },
+  { no: 2, name: "PLANNER_FAST" },
   { no: 3, name: "PLANNER_MARKER" },
   { no: 4, name: "PLANNER_SAFELAND" },
 ]);
@@ -114,32 +131,75 @@ proto3.util.setEnumType(Planner, "mission.v1.Planner", [
  */
 export enum Controller {
   /**
-   * @generated from enum value: CONTROLLER_PX4_VELO_FB = 0;
+   * @generated from enum value: CONTROLLER_UNSPECIFIED = 0;
    */
-  PX4_VELO_FB = 0,
+  UNSPECIFIED = 0,
 
   /**
-   * @generated from enum value: CONTROLLER_A_FB = 1;
+   * @generated from enum value: CONTROLLER_PX4_VELO_FB = 1;
    */
-  A_FB = 1,
+  PX4_VELO_FB = 1,
 
   /**
-   * @generated from enum value: CONTROLLER_A_FW = 2;
+   * @generated from enum value: CONTROLLER_A_FB = 2;
    */
-  A_FW = 2,
+  A_FB = 2,
 
   /**
-   * @generated from enum value: CONTROLLER_A_ADRJ = 3;
+   * @generated from enum value: CONTROLLER_A_FW = 3;
    */
-  A_ADRJ = 3,
+  A_FW = 3,
+
+  /**
+   * @generated from enum value: CONTROLLER_A_ADRJ = 4;
+   */
+  A_ADRJ = 4,
 }
 // Retrieve enum metadata with: proto3.getEnumType(Controller)
 proto3.util.setEnumType(Controller, "mission.v1.Controller", [
-  { no: 0, name: "CONTROLLER_PX4_VELO_FB" },
-  { no: 1, name: "CONTROLLER_A_FB" },
-  { no: 2, name: "CONTROLLER_A_FW" },
-  { no: 3, name: "CONTROLLER_A_ADRJ" },
+  { no: 0, name: "CONTROLLER_UNSPECIFIED" },
+  { no: 1, name: "CONTROLLER_PX4_VELO_FB" },
+  { no: 2, name: "CONTROLLER_A_FB" },
+  { no: 3, name: "CONTROLLER_A_FW" },
+  { no: 4, name: "CONTROLLER_A_ADRJ" },
 ]);
+
+/**
+ * @generated from message mission.v1.vector3
+ */
+export class vector3 extends Message<vector3> {
+  /**
+   * @generated from field: repeated double vector = 1;
+   */
+  vector: number[] = [];
+
+  constructor(data?: PartialMessage<vector3>) {
+    super();
+    proto3.util.initPartial(data, this);
+  }
+
+  static readonly runtime: typeof proto3 = proto3;
+  static readonly typeName = "mission.v1.vector3";
+  static readonly fields: FieldList = proto3.util.newFieldList(() => [
+    { no: 1, name: "vector", kind: "scalar", T: 1 /* ScalarType.DOUBLE */, repeated: true },
+  ]);
+
+  static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): vector3 {
+    return new vector3().fromBinary(bytes, options);
+  }
+
+  static fromJson(jsonValue: JsonValue, options?: Partial<JsonReadOptions>): vector3 {
+    return new vector3().fromJson(jsonValue, options);
+  }
+
+  static fromJsonString(jsonString: string, options?: Partial<JsonReadOptions>): vector3 {
+    return new vector3().fromJsonString(jsonString, options);
+  }
+
+  static equals(a: vector3 | PlainMessage<vector3> | undefined, b: vector3 | PlainMessage<vector3> | undefined): boolean {
+    return proto3.util.equals(vector3, a, b);
+  }
+}
 
 /**
  * @generated from message mission.v1.InitInstruction
@@ -157,14 +217,14 @@ export class InitInstruction extends Message<InitInstruction> {
    *
    * @generated from field: mission.v1.Controller controller = 2;
    */
-  controller = Controller.PX4_VELO_FB;
+  controller = Controller.UNSPECIFIED;
 
   /**
    * Define a string field for the standard.
    *
    * @generated from field: mission.v1.Termination terminate = 3;
    */
-  terminate = Termination.AUTO;
+  terminate = Termination.UNSPECIFIED;
 
   constructor(data?: PartialMessage<InitInstruction>) {
     super();
@@ -207,24 +267,24 @@ export class TravelInstruction extends Message<TravelInstruction> {
    *
    * @generated from field: mission.v1.Planner planner = 1;
    */
-  planner = Planner.EGO;
+  planner = Planner.UNSPECIFIED;
 
   /**
-   * @generated from field: repeated double waypoint = 2;
+   * @generated from field: repeated mission.v1.vector3 waypoint = 2;
    */
-  waypoint: number[] = [];
+  waypoint: vector3[] = [];
 
   /**
-   * @generated from field: repeated double constraint = 3;
+   * @generated from field: repeated mission.v1.vector3 constraint = 3;
    */
-  constraint: number[] = [];
+  constraint: vector3[] = [];
 
   /**
    * Define a string field for the standard. 
    *
    * @generated from field: mission.v1.Termination terminate = 4;
    */
-  terminate = Termination.AUTO;
+  terminate = Termination.UNSPECIFIED;
 
   constructor(data?: PartialMessage<TravelInstruction>) {
     super();
@@ -235,8 +295,8 @@ export class TravelInstruction extends Message<TravelInstruction> {
   static readonly typeName = "mission.v1.TravelInstruction";
   static readonly fields: FieldList = proto3.util.newFieldList(() => [
     { no: 1, name: "planner", kind: "enum", T: proto3.getEnumType(Planner) },
-    { no: 2, name: "waypoint", kind: "scalar", T: 1 /* ScalarType.DOUBLE */, repeated: true },
-    { no: 3, name: "constraint", kind: "scalar", T: 1 /* ScalarType.DOUBLE */, repeated: true },
+    { no: 2, name: "waypoint", kind: "message", T: vector3, repeated: true },
+    { no: 3, name: "constraint", kind: "message", T: vector3, repeated: true },
     { no: 4, name: "terminate", kind: "enum", T: proto3.getEnumType(Termination) },
   ]);
 
@@ -268,7 +328,7 @@ export class ActionInstruction extends Message<ActionInstruction> {
    *
    * @generated from field: mission.v1.Action action = 1;
    */
-  action = Action.TAKEOFF;
+  action = Action.UNSPECIFIED;
 
   /**
    * This field is optionals only for release command. If it is not populated, the default value is 0.
@@ -383,10 +443,20 @@ export class SendMissionRequest extends Message<SendMissionRequest> {
   id = "";
 
   /**
-   * @generated from field: repeated mission.v1.SequenceItem sequence_items = 2;
+   * @generated from field: int32 length = 2;
+   */
+  length = 0;
+
+  /**
+   * @generated from field: string description = 3;
+   */
+  description = "";
+
+  /**
+   * @generated from field: repeated mission.v1.SequenceItem sequence_items = 4;
    */
   sequenceItems: SequenceItem[] = [];
-	[immerable] = true;
+
   constructor(data?: PartialMessage<SendMissionRequest>) {
     super();
     proto3.util.initPartial(data, this);
@@ -396,7 +466,9 @@ export class SendMissionRequest extends Message<SendMissionRequest> {
   static readonly typeName = "mission.v1.SendMissionRequest";
   static readonly fields: FieldList = proto3.util.newFieldList(() => [
     { no: 1, name: "id", kind: "scalar", T: 9 /* ScalarType.STRING */ },
-    { no: 2, name: "sequence_items", kind: "message", T: SequenceItem, repeated: true },
+    { no: 2, name: "length", kind: "scalar", T: 5 /* ScalarType.INT32 */ },
+    { no: 3, name: "description", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+    { no: 4, name: "sequence_items", kind: "message", T: SequenceItem, repeated: true },
   ]);
 
   static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): SendMissionRequest {
@@ -456,9 +528,9 @@ export class SingleInstruction extends Message<SingleInstruction> {
 }
 
 /**
- * @generated from message mission.v1.SendMissionResult
+ * @generated from message mission.v1.SendMissionResponse
  */
-export class SendMissionResult extends Message<SendMissionResult> {
+export class SendMissionResponse extends Message<SendMissionResponse> {
   /**
    * Define a boolean field to indicate success or failure.
    *
@@ -478,33 +550,33 @@ export class SendMissionResult extends Message<SendMissionResult> {
    */
   errorMessage = "";
 
-  constructor(data?: PartialMessage<SendMissionResult>) {
+  constructor(data?: PartialMessage<SendMissionResponse>) {
     super();
     proto3.util.initPartial(data, this);
   }
 
   static readonly runtime: typeof proto3 = proto3;
-  static readonly typeName = "mission.v1.SendMissionResult";
+  static readonly typeName = "mission.v1.SendMissionResponse";
   static readonly fields: FieldList = proto3.util.newFieldList(() => [
     { no: 1, name: "success", kind: "scalar", T: 8 /* ScalarType.BOOL */ },
     { no: 2, name: "message", kind: "scalar", T: 9 /* ScalarType.STRING */ },
     { no: 3, name: "error_message", kind: "scalar", T: 9 /* ScalarType.STRING */ },
   ]);
 
-  static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): SendMissionResult {
-    return new SendMissionResult().fromBinary(bytes, options);
+  static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): SendMissionResponse {
+    return new SendMissionResponse().fromBinary(bytes, options);
   }
 
-  static fromJson(jsonValue: JsonValue, options?: Partial<JsonReadOptions>): SendMissionResult {
-    return new SendMissionResult().fromJson(jsonValue, options);
+  static fromJson(jsonValue: JsonValue, options?: Partial<JsonReadOptions>): SendMissionResponse {
+    return new SendMissionResponse().fromJson(jsonValue, options);
   }
 
-  static fromJsonString(jsonString: string, options?: Partial<JsonReadOptions>): SendMissionResult {
-    return new SendMissionResult().fromJsonString(jsonString, options);
+  static fromJsonString(jsonString: string, options?: Partial<JsonReadOptions>): SendMissionResponse {
+    return new SendMissionResponse().fromJsonString(jsonString, options);
   }
 
-  static equals(a: SendMissionResult | PlainMessage<SendMissionResult> | undefined, b: SendMissionResult | PlainMessage<SendMissionResult> | undefined): boolean {
-    return proto3.util.equals(SendMissionResult, a, b);
+  static equals(a: SendMissionResponse | PlainMessage<SendMissionResponse> | undefined, b: SendMissionResponse | PlainMessage<SendMissionResponse> | undefined): boolean {
+    return proto3.util.equals(SendMissionResponse, a, b);
   }
 }
 
