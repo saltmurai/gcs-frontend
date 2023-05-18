@@ -457,7 +457,6 @@ export class SendMissionRequest extends Message<SendMissionRequest> {
    * @generated from field: repeated mission.v1.SequenceItem sequence_items = 4;
    */
 	sequenceItems: SequenceItem[] = [];
-	[immerable] = true;
 
   constructor(data?: PartialMessage<SendMissionRequest>) {
     super();

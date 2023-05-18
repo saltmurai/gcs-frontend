@@ -1,7 +1,11 @@
 import clsx from "clsx";
 import { useRouter } from "next/router";
+import { useEffect, useState } from "react";
 
 import { GiDeliveryDrone } from "react-icons/gi";
+import Home from "./Home";
+import Mission from "./Mission";
+import { HashLoader } from "react-spinners";
 
 // A layout that has a topbar
 const TabList = [
@@ -19,9 +23,9 @@ const TabList = [
   },
 ];
 
-export default function Layout({ children }: { children: React.ReactNode }) {
+export default function Container() {
   const router = useRouter();
-
+  const [activeTab, setActiveTab] = useState("Mission Planner");
   return (
     <>
       <div className="min-h-screen min-w-screen p-2 bg-slate-200 flex gap-2 flex-col">
@@ -30,16 +34,18 @@ export default function Layout({ children }: { children: React.ReactNode }) {
           <div className="tabs flex-1 ml-5	">
             {TabList.map((tab) => {
               return (
-                <a
+                <div
                   key={tab.name}
                   className={clsx(
-                    tab.href === router.asPath && "tab-active",
+                    tab.name === activeTab && "tab-active",
                     "tab tab-bordered"
                   )}
-                  href={tab.href}
+                  onClick={() => {
+                    setActiveTab(tab.name);
+                  }}
                 >
                   {tab.name}
-                </a>
+                </div>
               );
             })}
           </div>
@@ -52,7 +58,10 @@ export default function Layout({ children }: { children: React.ReactNode }) {
             </div>
           </div>
         </div>
-        {children}
+        <>
+          {activeTab === "Home" && <Home />}
+          {activeTab === "Mission Planner" && <Mission />}
+        </>
       </div>
     </>
   );
