@@ -3,6 +3,7 @@ import InitParam from "./InitParam";
 import { useMission } from "./MissionContext";
 import TravelParam from "./TravelPram";
 import ActionParam from "./ActionParam";
+import client from "@/gRPC/client";
 
 const actionList = ["Init", "Travel", "Action"];
 type ActionType = (typeof actionList)[number];
@@ -11,6 +12,10 @@ export default function UIConfig() {
   const { mission, dispatch } = useMission();
   function changeActionType(event: React.ChangeEvent<HTMLSelectElement>) {
     setActionType(event.target.value as ActionType);
+  }
+  async function sendMission() {
+    const response = await client.sendMission(mission);
+    console.log(response);
   }
   return (
     <>
@@ -32,7 +37,12 @@ export default function UIConfig() {
           {actionType === "Action" && <ActionParam />}
         </div>
         <div className="flex justify-around">
-          <div className="btn w-1/3 self-center bg-blue-500">Send Mission</div>
+          <div
+            className="btn w-1/3 self-center bg-blue-500"
+            onClick={sendMission}
+          >
+            Send Mission
+          </div>
           <div
             className="btn w-1/3 self-center bg-red-300"
             onClick={() => dispatch({ type: "remove" })}
