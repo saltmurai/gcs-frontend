@@ -15,21 +15,21 @@ export default function MultiInput({
           <span className="">{`Point ${id}`}</span>
           <input
             type="text"
-            placeholder="Point 1"
-            className="input input-bordered input-sm"
+            disabled={true}
+            placeholder="longitude"
+            className="input input-bordered input-sm input-disabled"
             name={`${id}-p1`}
-            onChange={onChange}
           />
           <input
             type="text"
-            placeholder="Point 2"
+            disabled={true}
+            placeholder="latitude"
             className="input input-bordered input-sm"
             name={`${id}-p2`}
-            onChange={onChange}
           />
           <input
             type="text"
-            placeholder="Point 3"
+            placeholder="height"
             className="input input-bordered input-sm"
             name={`${id}-p3`}
             onChange={onChange}

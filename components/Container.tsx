@@ -3,9 +3,10 @@ import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 
 import { GiDeliveryDrone } from "react-icons/gi";
-import Home from "./Home";
+import Home from "./Home/Home";
 import Mission from "./Mission";
 import { HashLoader } from "react-spinners";
+import Packages from "./Packages/Packages";
 
 // A layout that has a topbar
 const TabList = [
@@ -16,6 +17,10 @@ const TabList = [
   {
     name: "Mission Planner",
     href: "/mission",
+  },
+  {
+    name: "Packages",
+    href: "/packages",
   },
   {
     name: "Settings",
@@ -29,6 +34,7 @@ export default function Container() {
   return (
     <>
       <div className="min-h-screen min-w-screen p-2 bg-slate-200 flex gap-2 flex-col">
+        {/* Topbar */}
         <div className="flex bg-white h-12 items-center p-2 rounded-md">
           <GiDeliveryDrone color="black" size={32} />
           <div className="tabs flex-1 ml-5	">
@@ -61,6 +67,7 @@ export default function Container() {
         <>
           {activeTab === "Home" && <Home />}
           {activeTab === "Mission Planner" && <Mission />}
+          {activeTab === "Packages" && <Packages />}
         </>
       </div>
     </>

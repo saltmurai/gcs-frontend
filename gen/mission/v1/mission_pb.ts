@@ -5,7 +5,6 @@
 
 import type { BinaryReadOptions, FieldList, JsonReadOptions, JsonValue, PartialMessage, PlainMessage } from "@bufbuild/protobuf";
 import { Message, proto3 } from "@bufbuild/protobuf";
-import { immerable } from "immer";
 
 /**
  * @generated from enum mission.v1.Termination
@@ -449,14 +448,24 @@ export class SendMissionRequest extends Message<SendMissionRequest> {
   length = 0;
 
   /**
-   * @generated from field: string description = 3;
+   * @generated from field: int32 package_id = 3;
+   */
+  packageId = 0;
+
+  /**
+   * @generated from field: int32 drone_id = 4;
+   */
+  droneId = 0;
+
+  /**
+   * @generated from field: string description = 5;
    */
   description = "";
 
   /**
-   * @generated from field: repeated mission.v1.SequenceItem sequence_items = 4;
+   * @generated from field: repeated mission.v1.SequenceItem sequence_items = 6;
    */
-	sequenceItems: SequenceItem[] = [];
+  sequenceItems: SequenceItem[] = [];
 
   constructor(data?: PartialMessage<SendMissionRequest>) {
     super();
@@ -468,8 +477,10 @@ export class SendMissionRequest extends Message<SendMissionRequest> {
   static readonly fields: FieldList = proto3.util.newFieldList(() => [
     { no: 1, name: "id", kind: "scalar", T: 9 /* ScalarType.STRING */ },
     { no: 2, name: "length", kind: "scalar", T: 5 /* ScalarType.INT32 */ },
-    { no: 3, name: "description", kind: "scalar", T: 9 /* ScalarType.STRING */ },
-    { no: 4, name: "sequence_items", kind: "message", T: SequenceItem, repeated: true },
+    { no: 3, name: "package_id", kind: "scalar", T: 5 /* ScalarType.INT32 */ },
+    { no: 4, name: "drone_id", kind: "scalar", T: 5 /* ScalarType.INT32 */ },
+    { no: 5, name: "description", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+    { no: 6, name: "sequence_items", kind: "message", T: SequenceItem, repeated: true },
   ]);
 
   static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): SendMissionRequest {
