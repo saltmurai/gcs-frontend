@@ -438,31 +438,6 @@ export class SendMissionRequest extends Message<SendMissionRequest> {
   /**
    * Define a unique ID for the mission.
    *
-   * @generated from field: string id = 1;
-   */
-  id = "";
-
-  /**
-   * @generated from field: int32 length = 2;
-   */
-  length = 0;
-
-  /**
-   * @generated from field: int32 package_id = 3;
-   */
-  packageId = 0;
-
-  /**
-   * @generated from field: int32 drone_id = 4;
-   */
-  droneId = 0;
-
-  /**
-   * @generated from field: string description = 5;
-   */
-  description = "";
-
-  /**
    * @generated from field: repeated mission.v1.SequenceItem sequence_items = 6;
    */
   sequenceItems: SequenceItem[] = [];
@@ -475,11 +450,6 @@ export class SendMissionRequest extends Message<SendMissionRequest> {
   static readonly runtime: typeof proto3 = proto3;
   static readonly typeName = "mission.v1.SendMissionRequest";
   static readonly fields: FieldList = proto3.util.newFieldList(() => [
-    { no: 1, name: "id", kind: "scalar", T: 9 /* ScalarType.STRING */ },
-    { no: 2, name: "length", kind: "scalar", T: 5 /* ScalarType.INT32 */ },
-    { no: 3, name: "package_id", kind: "scalar", T: 5 /* ScalarType.INT32 */ },
-    { no: 4, name: "drone_id", kind: "scalar", T: 5 /* ScalarType.INT32 */ },
-    { no: 5, name: "description", kind: "scalar", T: 9 /* ScalarType.STRING */ },
     { no: 6, name: "sequence_items", kind: "message", T: SequenceItem, repeated: true },
   ]);
 

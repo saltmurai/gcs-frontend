@@ -4,11 +4,15 @@ import { useMission } from "./MissionContext";
 import TravelParam from "./TravelPram";
 import ActionParam from "./ActionParam";
 import client from "@/gRPC/client";
+import { Button } from "@mantine/core";
+import CreateSequenceModal from "./AddSequenceModal";
 
 const actionList = ["Init", "Travel", "Action"];
+const userAction = ["Create a new mission", "Edit a mission"];
 type ActionType = (typeof actionList)[number];
 export default function UIConfig() {
   const [actionType, setActionType] = useState<ActionType>("Init");
+  const [userAction, setUserAction] = useState<string>("");
   const { mission, dispatch } = useMission();
   function changeActionType(event: React.ChangeEvent<HTMLSelectElement>) {
     setActionType(event.target.value as ActionType);
@@ -37,17 +41,12 @@ export default function UIConfig() {
           {actionType === "Action" && <ActionParam />}
         </div>
         <div className="flex justify-around">
-          <div
-            className="btn w-1/3 self-center bg-blue-500"
-            onClick={sendMission}
-          >
-            Send Mission
-          </div>
+          <CreateSequenceModal mission={mission} />
           <div
             className="btn w-1/3 self-center bg-red-300"
             onClick={() => dispatch({ type: "remove" })}
           >
-            Clear Mission
+            Clear Sequence
           </div>
         </div>
       </div>

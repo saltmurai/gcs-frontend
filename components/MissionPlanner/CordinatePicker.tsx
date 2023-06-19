@@ -8,6 +8,7 @@ import "maplibre-gl/dist/maplibre-gl.css";
 import maplibregl from "maplibre-gl";
 import { useState } from "react";
 import { AiFillHome } from "react-icons/ai";
+import { vector3 } from "@/gen/mission/v1/mission_pb";
 
 type point = 1 | 2 | 3 | 4;
 
@@ -24,14 +25,25 @@ export default function CordinatePicker({
   onWaypointChange,
   choosePoint,
   switchPoint,
+  waypoint,
 }: {
   onWaypointChange: (e: any) => void;
   choosePoint: point;
   switchPoint: (point: point) => void;
+  waypoint: vector3[];
 }) {
-  const [PointA, setPointA] = useState<Point | undefined>();
-  const [PointB, setPointB] = useState<Point | undefined>();
-  const [PointC, setPointC] = useState<Point | undefined>();
+  const [PointA, setPointA] = useState<Point | undefined>({
+    lat: waypoint[0].vector[1] || 0,
+    lng: waypoint[0].vector[0] || 0,
+  });
+  const [PointB, setPointB] = useState<Point | undefined>({
+    lat: waypoint[1].vector[1] || 0,
+    lng: waypoint[1].vector[0] || 0,
+  });
+  const [PointC, setPointC] = useState<Point | undefined>({
+    lat: waypoint[2].vector[1] || 0,
+    lng: waypoint[2].vector[0] || 0,
+  });
   const [currentPos, setCurrentPos] = useState<Point | undefined>(
     initCordinates
   );
@@ -63,6 +75,7 @@ export default function CordinatePicker({
       }}
       onClick={(e: any) => {
         onWaypointChange(e);
+        hanldelClickMap(e);
       }}
       onMouseMove={(e: any) => {
         setCurrentPos({ lat: e.lngLat.lat, lng: e.lngLat.lng });

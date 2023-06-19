@@ -1,6 +1,7 @@
 import { Button, Group, Input, Modal, NumberInput } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
 import CordinatePicker from "./CordinatePicker";
+import { vector3 } from "@/gen/mission/v1/mission_pb";
 
 type point = 1 | 2 | 3 | 4;
 
@@ -8,10 +9,12 @@ export default function CordinatePickerModal({
   onWaypointChange,
   choosePoint,
   switchPoint,
+  waypoint,
 }: {
   onWaypointChange: (e: any) => void;
   choosePoint: point;
   switchPoint: (point: point) => void;
+  waypoint: vector3[];
 }) {
   const [opened, { open, close }] = useDisclosure(false);
 
@@ -28,7 +31,13 @@ export default function CordinatePickerModal({
             choosePoint={choosePoint}
             switchPoint={switchPoint}
             onWaypointChange={onWaypointChange}
+            waypoint={waypoint}
           />
+        </div>
+        <div className="w-full flex items-center justify-center">
+          <div className="btn btn-primary" onClick={close}>
+            Confirm
+          </div>
         </div>
       </Modal>
       <Group position="center">

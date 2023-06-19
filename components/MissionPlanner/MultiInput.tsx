@@ -4,25 +4,31 @@ import { useState } from "react";
 export default function MultiInput({
   id,
   onChange,
+  isManual = false,
+  lng,
+  lat,
 }: {
   id: string;
   onChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
+  isManual?: boolean;
+  lng?: number;
+  lat?: number;
 }) {
   return (
     <div>
-      <div className="form-control">
-        <label className=" input-group input-group-sm flex flex-col w-24 gap-2">
+      <div className="form-control w-full">
+        <label className=" input-group input-group-sm flex flex-col w-32 gap-2">
           <span className="">{`Point ${id}`}</span>
           <input
             type="text"
-            disabled={true}
-            placeholder="longitude"
-            className="input input-bordered input-sm input-disabled"
+						placeholder="longitude"
+						value={lng}
+            className="input input-bordered input-sm"
             name={`${id}-p1`}
           />
           <input
             type="text"
-            disabled={true}
+						value={lat}
             placeholder="latitude"
             className="input input-bordered input-sm"
             name={`${id}-p2`}

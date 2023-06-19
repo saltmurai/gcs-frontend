@@ -51,7 +51,6 @@ export default function TravelParam() {
   function hanldeClickMap(e: any) {
     const { lng, lat } = e.lngLat;
     console.log(lng, lat);
-    // convert to 12 decimal places
     console.log(lng.toFixed(12));
     const lnglat = new vector3();
 
@@ -71,7 +70,21 @@ export default function TravelParam() {
         setTravelInstruction(travelInstruction);
         break;
       case 2:
+        const waypointCopy2 = [...waypoint];
+        waypointCopy2[1].vector = lnglat.vector;
+        setWaypoint(waypointCopy2);
+        console.log(waypointCopy2);
+        travelInstruction.waypoint = [...waypointCopy2];
+        setTravelInstruction(travelInstruction);
+        break;
       case 3:
+        const waypointCopy3 = [...waypoint];
+        waypointCopy3[2].vector = lnglat.vector;
+        setWaypoint(waypointCopy3);
+        console.log(waypointCopy3);
+        travelInstruction.waypoint = [...waypointCopy3];
+        setTravelInstruction(travelInstruction);
+        break;
       case 4:
         break;
     }
@@ -82,11 +95,6 @@ export default function TravelParam() {
   }
   const { mission, dispatch } = useMission();
   const addToMission = () => {
-    // const updatedTravelInstruction = new TravelInstruction();
-    // updatedTravelInstruction.planner = travelInstruction.planner;
-    // updatedTravelInstruction.waypoint = waypoint;
-    // updatedTravelInstruction.constraint = constrains;
-    // console.log(waypoint);
     console.log(travelInstruction);
     const newSequenceItem = new SequenceItem({
       sequence: {
@@ -164,13 +172,32 @@ export default function TravelParam() {
         <CordinatePickerModal
           onWaypointChange={hanldeClickMap}
           choosePoint={choosePoint}
+          waypoint={waypoint}
           switchPoint={switchPoint}
         />
         <div className="flex w-full gap-3 justify-center">
-          <MultiInput key={"1"} id="1" onChange={waypointOnChange} />
-          <MultiInput key={"2"} id="2" onChange={waypointOnChange} />
+          <MultiInput
+            key={"1"}
+            id="1"
+            onChange={waypointOnChange}
+            lng={waypoint[0].vector[0]}
+            lat={waypoint[0].vector[1]}
+          />
+          <MultiInput
+            key={"2"}
+            id="2"
+            onChange={waypointOnChange}
+            lng={waypoint[1].vector[0]}
+            lat={waypoint[1].vector[1]}
+          />
 
-          <MultiInput key={"3"} id="3" onChange={waypointOnChange} />
+          <MultiInput
+            key={"3"}
+            id="3"
+            onChange={waypointOnChange}
+            lng={waypoint[2].vector[0]}
+            lat={waypoint[2].vector[1]}
+          />
         </div>
       </div>
       <label>Constrains</label>

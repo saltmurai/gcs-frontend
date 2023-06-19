@@ -23,6 +23,5 @@ export const MissionService = {
       O: SendMissionResponse,
       kind: MethodKind.Unary,
     },
-  }
+  },
 } as const;
-

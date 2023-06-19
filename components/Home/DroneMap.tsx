@@ -1,11 +1,21 @@
 import { GiDeliveryDrone } from "react-icons/gi";
 import Map, { Marker, Source, Layer } from "react-map-gl";
 import convertToGeoJSON from "@/utils/map";
-import { useEffect, useState } from "react";
+import React, { use, useEffect, useState } from "react";
 import "mapbox-gl/dist/mapbox-gl.css";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
+import { getActiveDrones } from "@/api/api";
 
-const DroneMarker = () => {
-  return <GiDeliveryDrone size={35} className="text-blue-500" />;
+const colors = ["red", "yellow", "amber", "yellow", "green"];
+
+const DroneMarker = ({
+  size = 35,
+  color = "blue",
+}: {
+  size?: number;
+  color?: string;
+}) => {
+  return <GiDeliveryDrone size={size} className={`text-${color}-500`} />;
 };
 
 const coordinates = [
@@ -18,44 +28,64 @@ const coordinates = [
 
 const geoJSON = convertToGeoJSON(coordinates);
 const DroneMap = () => {
+  const [messages, setMessages] = useState<any[]>([]);
+  const { data, isLoading } = useQuery(["activeDrone"], getActiveDrones, {
+    refetchInterval: 500,
+  });
+  const [drones, setDrones] = useState<any>();
   const [coordinateIndex, setCoordinateIndex] = useState(0);
-  const [longitude, setLongitude] = useState(coordinates[0][0]);
-  const [latitude, setLatitude] = useState(coordinates[0][1]);
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setCoordinateIndex((prevIndex) => {
-        const newIndex = prevIndex + 1;
-        if (newIndex >= coordinates.length) {
-          clearInterval(interval);
-          return prevIndex;
-        } else {
-          const newLongitude = coordinates[newIndex][0];
-          const newLatitude = coordinates[newIndex][1];
-          setLongitude(newLongitude);
-          setLatitude(newLatitude);
-          return newIndex;
-        }
-      });
-    }, 1500);
+  const [longitude, setLongitude] = useState(0);
+  const [latitude, setLatitude] = useState(0);
 
-    return () => {
-      clearInterval(interval);
+  useEffect(() => {
+    const socket = new WebSocket("ws://localhost:3003");
+
+    socket.onopen = () => {
+      console.log("connected");
+    };
+    socket.onmessage = (e) => {
+      const socketData = JSON.parse(e.data);
+
+      if (messages.length > 1000) {
+        setMessages((prev) => prev.slice(1));
+      } else {
+        setMessages((prev) => [...prev, socketData]);
+      }
+    };
+    socket.onclose = () => {
+      console.log("disconnected");
     };
   }, []);
 
+  if (isLoading) {
+    return <div>Loading...</div>;
+  }
   return (
     <Map
       initialViewState={{
-        longitude: 105.84212921674695,
-        latitude: 21.005859155053443,
-        zoom: 15,
+        longitude: 8.545593799999999,
+        latitude: 47.3977419,
+        zoom: 20,
       }}
       mapStyle={"mapbox://styles/mapbox/dark-v11"}
       mapboxAccessToken="pk.eyJ1Ijoic2FsdG11cmFpIiwiYSI6ImNsaTJ6cmE3bDJjbnEzY213ZTMwNWdkOGcifQ.c7JQWGP9Ak1a7t9OzQa89g"
     >
-      <Marker longitude={longitude} latitude={latitude}>
+      {/* @ts-ignore */}
+      {data?.map((drone: any, index: number) => {
+        const position = JSON.parse(drone.Position);
+        return (
+          <Marker
+            key={drone.ID}
+            longitude={position.longitude_deg}
+            latitude={position.latitude_deg}
+          >
+            <DroneMarker color={colors[index]} />
+          </Marker>
+        );
+      })}
+      {/* <Marker longitude={longitude} latitude={latitude}>
         <DroneMarker />
-      </Marker>
+      </Marker> */}
       <Source id="drone" type="geojson" data={geoJSON}>
         <Layer
           id="drone"
