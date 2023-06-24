@@ -18,7 +18,7 @@ export default function Home() {
   });
 
   return (
-    <div className="flex bg-slate-200 flex-1 gap-2">
+    <div className="flex bg-slate-200 flex-1 gap-2 max-h-screen">
       <div className="flex-1 bg-white rounded-md">
         <DroneMap />
       </div>

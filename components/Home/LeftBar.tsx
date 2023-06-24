@@ -8,6 +8,8 @@ import DroneTab from "./DroneTab";
 import Mission from "../Mission";
 import SendMission from "./AddMissionModal";
 import MissionTab from "./MissionTab";
+import { Divider } from "@mantine/core";
+import LogWindow from "./LogWindow";
 
 type Tabs = "Drone" | "Mission" | "Sequence";
 
@@ -15,8 +17,8 @@ export default function LeftBar() {
   const [activeTab, setActiveTabs] = useState<Tabs>("Drone");
 
   return (
-    <div className="h-full px-2">
-      <div className="flex">
+    <div className="px-2 flex items-center flex-col">
+      <div className="flex w-full">
         <div className="tabs flex-1 flex justify-around">
           <div
             className={clsx(
@@ -47,9 +49,13 @@ export default function LeftBar() {
           </div>
         </div>
       </div>
-      <div className="flex flex-col gap-2 px-1 overflow-scroll h-1/2">
+      <div className="flex flex-col items-center h-1/2 w-full">
         {activeTab === "Drone" && <DroneTab />}
         {activeTab === "Mission" && <MissionTab />}
+      </div>
+      <div className="divider">Log</div>
+      <div className="flex-1 w-full overflow-scroll">
+        <LogWindow />
       </div>
     </div>
   );

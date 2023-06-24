@@ -15,9 +15,9 @@ export default function DroneTab() {
     return <div>Error</div>;
   }
   return (
-    <div className="h-full">
+    <div className="h-full w-full">
       <AddDroneModal />
-      <div className="flex border shadow-inner bg-gray-100 rounded-lg py-2 flex-col gap-2 px-2 mt-2 overflow-scroll">
+      <div className="flex border w-full shadow-inner bg-gray-100 rounded-lg py-2 flex-col gap-2 px-2 mt-2 overflow-scroll h-[25vh]">
         {data ? (
           data
             .sort((a: DroneCardProps, b: DroneCardProps) => {

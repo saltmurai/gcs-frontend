@@ -19,7 +19,7 @@ export default function MissionTab() {
   return (
     <>
       <SendMission />
-      <div className="flex border shadow-inner bg-gray-100 rounded-lg py-2 flex-col gap-2 px-2 mt-2 overflow-scroll">
+      <div className="flex border h-[25vh] overflow-scroll shadow-inner bg-gray-100 rounded-lg py-2 flex-col gap-2 px-2 mt-2 w-full">
         {data.map((mission: any) => {
           return <MissionCard key={mission.ID} {...mission} />;
         })}

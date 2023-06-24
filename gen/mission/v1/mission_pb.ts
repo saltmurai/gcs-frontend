@@ -213,16 +213,23 @@ export class InitInstruction extends Message<InitInstruction> {
   peripheral: number[] = [];
 
   /**
+   * Home
+   *
+   * @generated from field: repeated double home = 2;
+   */
+  home: number[] = [];
+
+  /**
    * Define a string field for the controller.
    *
-   * @generated from field: mission.v1.Controller controller = 2;
+   * @generated from field: mission.v1.Controller controller = 3;
    */
   controller = Controller.UNSPECIFIED;
 
   /**
    * Define a string field for the standard.
    *
-   * @generated from field: mission.v1.Termination terminate = 3;
+   * @generated from field: mission.v1.Termination terminate = 4;
    */
   terminate = Termination.UNSPECIFIED;
 
@@ -235,8 +242,9 @@ export class InitInstruction extends Message<InitInstruction> {
   static readonly typeName = "mission.v1.InitInstruction";
   static readonly fields: FieldList = proto3.util.newFieldList(() => [
     { no: 1, name: "peripheral", kind: "scalar", T: 5 /* ScalarType.INT32 */, repeated: true },
-    { no: 2, name: "controller", kind: "enum", T: proto3.getEnumType(Controller) },
-    { no: 3, name: "terminate", kind: "enum", T: proto3.getEnumType(Termination) },
+    { no: 2, name: "home", kind: "scalar", T: 1 /* ScalarType.DOUBLE */, repeated: true },
+    { no: 3, name: "controller", kind: "enum", T: proto3.getEnumType(Controller) },
+    { no: 4, name: "terminate", kind: "enum", T: proto3.getEnumType(Termination) },
   ]);
 
   static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): InitInstruction {
