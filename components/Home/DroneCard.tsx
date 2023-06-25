@@ -1,4 +1,5 @@
 import { deleteDrone } from "@/api/api";
+import { useQueryClient } from "@tanstack/react-query";
 import { AiFillDelete, AiOutlineDelete } from "react-icons/ai";
 
 export type DroneCardProps = {
@@ -10,6 +11,7 @@ export type DroneCardProps = {
 };
 
 export default function DroneCard(props: DroneCardProps) {
+  const queryClient = useQueryClient();
   return (
     <div className="bg-white rounded-lg px-3 py-1 h-auto flex flex-col">
       <div className="flex w-full items-center gap-2">

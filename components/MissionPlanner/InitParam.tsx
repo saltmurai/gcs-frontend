@@ -13,6 +13,8 @@ import makeAnimated from "react-select/animated";
 import { init } from "next/dist/compiled/@vercel/og/satori";
 import { Divider } from "@tremor/react";
 import { useMission } from "./MissionContext";
+import HomePickerModal from "./HomePickerModal";
+import MultiInput from "./MultiInput";
 
 const animatedComponents = makeAnimated();
 const PeripheralOptions = [
@@ -58,7 +60,8 @@ const defaultInitSeq = new InitInstruction({
 export default function InitParam() {
   const [initInstruction, setInitInstruction] =
     useState<InitInstruction>(defaultInitSeq);
-
+  const [home, setHome] = useState<any[]>([0, 0, 0]);
+  const [isValidCordinate, setIsValidCordinate] = useState<boolean>(true);
   const { mission, dispatch } = useMission();
   const addToMission = () => {
     const initSeq = new SequenceItem({
@@ -70,13 +73,6 @@ export default function InitParam() {
     dispatch({ type: "add", payload: initSeq.clone() });
   };
 
-  function isInitSeqFilled() {
-    return (
-      initInstruction.peripheral.length > 0 &&
-      initInstruction.controller != 0 &&
-      initInstruction.terminate != 0
-    );
-  }
   // TODO: This is unsafe. Please refactor
   function changePeripheral(newValue: any) {
     if (newValue !== null) {
@@ -106,6 +102,31 @@ export default function InitParam() {
     initInstruction.terminate = newValue.value;
     setInitInstruction(initInstruction);
   };
+  const changeHomeMap = (e: any) => {
+    const { lng, lat } = e.lngLat;
+    setHome([lng, lat, 0]);
+    initInstruction.home = home;
+    setInitInstruction(initInstruction);
+  };
+  const changeHomeManual = (e: any) => {
+    const { name, value } = e.target;
+    const [index, property] = name.split("-p");
+
+    const isValidFloat = !isNaN(parseFloat(value));
+
+    setHome((prev) => {
+      const newHome = [...prev];
+      newHome[parseInt(property) - 1] = value;
+      return newHome;
+    });
+    if (isValidFloat) {
+      setIsValidCordinate(true);
+      initInstruction.home = home.map((value) => parseFloat(value));
+      setInitInstruction(initInstruction);
+    } else {
+      setIsValidCordinate(false);
+    }
+  };
 
   return (
     <div className="flex flex-col">
@@ -118,6 +139,18 @@ export default function InitParam() {
         closeMenuOnSelect={false}
         onChange={changePeripheral}
       />
+      <label>Home</label>
+      <HomePickerModal
+        init={initInstruction}
+        onWaypointChange={changeHomeMap}
+      />
+      <MultiInput
+        id="1"
+        onChange={changeHomeManual}
+        lng={home[0]}
+        lat={home[1]}
+      />
+
       <label>Controller</label>
       <Select
         instanceId={"controller"}

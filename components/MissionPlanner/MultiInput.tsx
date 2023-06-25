@@ -21,17 +21,19 @@ export default function MultiInput({
           <span className="">{`Point ${id}`}</span>
           <input
             type="text"
-						placeholder="longitude"
-						value={lng}
+            placeholder="longitude"
+            value={lng}
             className="input input-bordered input-sm"
             name={`${id}-p1`}
+            onChange={onChange}
           />
           <input
             type="text"
-						value={lat}
+            value={lat}
             placeholder="latitude"
             className="input input-bordered input-sm"
             name={`${id}-p2`}
+            onChange={onChange}
           />
           <input
             type="text"

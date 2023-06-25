@@ -16,24 +16,12 @@ const getClassName = (prefix: string) => {
 };
 
 export default function LogWindow() {
-  const [logs, setLogs] = useState([
-    "",
-    "========\nSAMPLE LOG\n SAMPLE SAMPLE\n MAVLINK \n SAMPLE \n \n \n \n \n\n\n\n\n========",
-    "[INFO] This is a sample log",
-    "[WARNING] This is a sample log",
-    "[ERROR] This is a sample log",
-    "[INFO] This is a sample log",
-    "[INFO] This is a sample log",
-    "[INFO] This is a sample log",
-    "[INFO] This is a sample log",
-    "[ERROR] This is a sample log",
-  ]);
+  const [logs, setLogs] = useState(["...Connecting to server"]);
   const divRef = useRef<HTMLDivElement>(null);
   useEffect(() => {
     divRef.current?.scrollTo(0, divRef.current.scrollHeight);
   }, [logs]);
   useEffect(() => {
-    console.log("connecting to log server");
     const ws = new WebSocket("ws://127.0.0.1:3002/ws");
     ws.onopen = () => {
       setLogs((prev) => [...prev, "Connected to log server"]);

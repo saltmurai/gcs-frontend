@@ -23,6 +23,7 @@ export default function CreateSequenceModal({
   async function onSubmit(values: any) {
     const params = {
       ...values,
+      length: mission.sequenceItems.length,
       seq: mission.toJson(),
     };
     const { data, status } = await addSequence(params);

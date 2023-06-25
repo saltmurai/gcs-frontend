@@ -86,3 +86,32 @@ export const getMission = async () => {
   const { data } = await api.get("/missions");
   return data;
 };
+
+export const deleteMission = async (id: string) =>
+  api.delete("/missions", { data: { id } });
+
+export const sendMission = async (id: string) => api.post(`/sendMission/${id}`);
+
+export const getImagesPath = async (id: number) => {
+  return api.get(`/mission/images/${id}`);
+};
+
+export const getImages = async (imagePath: string) => {
+  return api.post(
+    "/images",
+    { path: imagePath },
+    {
+      responseType: "blob",
+    }
+  );
+};
+
+export const confirmMission = async ({
+  id,
+  flag,
+}: {
+  id: number;
+  flag: string;
+}) => {
+  return api.post(`/confirmation/${id}/${flag}`);
+};
