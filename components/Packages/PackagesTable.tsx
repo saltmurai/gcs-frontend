@@ -19,7 +19,7 @@ export default function PackagesTable() {
     return <div>No data</div>;
   }
   return (
-    <div className="overflow-x-auto">
+    <div className="overflow-x-auto mt-5">
       <table className="table w-full">
         {/* head */}
         <thead>
@@ -28,7 +28,7 @@ export default function PackagesTable() {
             <th>Name</th>
             <th>Weight</th>
             <th>Height</th>
-            <th>Lenght</th>
+            <th>Length</th>
             <th>Sender</th>
             <th>Receiver</th>
           </tr>

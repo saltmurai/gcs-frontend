@@ -22,7 +22,7 @@ export default function LogWindow() {
     divRef.current?.scrollTo(0, divRef.current.scrollHeight);
   }, [logs]);
   useEffect(() => {
-    const ws = new WebSocket("ws://127.0.0.1:3002/ws");
+    const ws = new WebSocket(`${process.env.NEXT_PUBLIC_LOG_SERVER_WS}`);
     ws.onopen = () => {
       setLogs((prev) => [...prev, "Connected to log server"]);
     };

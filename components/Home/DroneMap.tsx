@@ -38,7 +38,7 @@ const DroneMap = () => {
   const [latitude, setLatitude] = useState(0);
 
   useEffect(() => {
-    const socket = new WebSocket("ws://localhost:3003");
+    const socket = new WebSocket(`${process.env.NEXT_PUBLIC_MAVLINK_WS}`);
 
     socket.onopen = () => {
       console.log("connected");

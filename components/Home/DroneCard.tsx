@@ -32,7 +32,16 @@ export default function DroneCard(props: DroneCardProps) {
           className="text-gray-300 hover:text-red-500"
           size={22}
           onClick={async () => {
-            await deleteDrone(props.ID);
+            try {
+              const res = await deleteDrone(props.ID);
+              if (res.status === 500) {
+                throw new Error(
+                  "Cannot delete drone. There is a mission in progress. Please delete mission first if you want to delete this drone"
+                );
+              }
+            } catch (error) {
+              alert(error);
+            }
           }}
         />
       </div>

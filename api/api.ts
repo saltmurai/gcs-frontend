@@ -6,7 +6,7 @@ import exp from "constants";
 import { list } from "postcss";
 
 export const api = axios.create({
-  baseURL: "http://localhost:3002",
+  baseURL: process.env.NEXT_PUBLIC_BACKEND_URL,
 });
 
 // get drones
