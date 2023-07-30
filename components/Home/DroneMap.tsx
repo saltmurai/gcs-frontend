@@ -1,4 +1,4 @@
-import { GiDeliveryDrone } from "react-icons/gi";
+import { MdOutlineNavigation } from "react-icons/md";
 import Map, { Marker, Source, Layer } from "react-map-gl";
 import convertToGeoJSON from "@/utils/map";
 import React, { useState } from "react";
@@ -12,13 +12,24 @@ import { Menu, Select } from "@mantine/core";
 const colors = ["red", "yellow", "amber", "yellow", "green"];
 
 const DroneMarker = ({
-  size = 35,
+  size = 50,
   color = "blue",
+  rotation = 30,
 }: {
   size?: number;
   color?: string;
+  rotation?: number;
 }) => {
-  return <GiDeliveryDrone size={size} className={`text-${color}-500`} />;
+  return (
+    <MdOutlineNavigation
+      size={size}
+      className={`text-${color}-500`}
+      style={{
+        transform: `rotate(${rotation}deg)`,
+        transition: "transform 0.3s ease-in-out",
+      }}
+    />
+  );
 };
 
 const coordinates = [
@@ -52,6 +63,7 @@ const DroneMap = () => {
     if (data) {
       return data.map((drone: any, index: number) => {
         const position = JSON.parse(drone.Position);
+        const heading_deg = JSON.parse(drone.HeadingDeg).heading_deg;
         return (
           <Marker
             key={drone.ID}
@@ -59,7 +71,7 @@ const DroneMap = () => {
             onClick={() => setChoosenDrone(index)}
             latitude={position.latitude_deg}
           >
-            <DroneMarker color={colors[index]} />
+            <DroneMarker color={colors[index]} rotation={heading_deg} />
           </Marker>
         );
       });
