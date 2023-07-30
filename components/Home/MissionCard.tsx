@@ -7,12 +7,14 @@ import {
 } from "@/api/api";
 import { Menu, Modal, Tooltip } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
+import { notifications } from "@mantine/notifications";
 import { useState } from "react";
 import {
   AiOutlineDelete,
   AiOutlineSend,
   AiFillFolderOpen,
 } from "react-icons/ai";
+import { GiCheckMark } from "react-icons/gi";
 import { HiDotsVertical } from "react-icons/hi";
 
 export function MissionCard({
@@ -46,7 +48,11 @@ export function MissionCard({
         console.log(images);
       }
     } catch (error) {
-      alert(error);
+      notifications.show({
+        title: "Error",
+        message: "Cannot get images from drone",
+        color: "red",
+      });
     }
 
     open();
@@ -58,7 +64,11 @@ export function MissionCard({
       refetch();
       close();
     } catch (error) {
-      alert(error);
+      notifications.show({
+        title: "Error",
+        message: "Cannot confirm mission",
+        color: "red",
+      });
     }
   };
 
@@ -68,7 +78,11 @@ export function MissionCard({
       refetch();
       close();
     } catch (error) {
-      alert(error);
+      notifications.show({
+        title: "Error",
+        message: "Cannot reject mission",
+        color: "red",
+      });
     }
   };
   return (
@@ -91,6 +105,12 @@ export function MissionCard({
 
             <Menu.Dropdown>
               <Menu.Label>Mission menu</Menu.Label>
+              <Menu.Item
+                icon={<GiCheckMark size={14} />}
+                onClick={handleSendMission}
+              >
+                Start mission
+              </Menu.Item>
               <Menu.Item
                 icon={<AiOutlineSend size={14} />}
                 onClick={handleSendMission}

@@ -3,6 +3,7 @@ import { SendMissionRequest } from "@/gen/mission/v1/mission_pb";
 import { Button, Input, Modal } from "@mantine/core";
 import { useForm } from "@mantine/form";
 import { useDisclosure } from "@mantine/hooks";
+import { notifications } from "@mantine/notifications";
 import { AiFillPlusCircle } from "react-icons/ai";
 
 export default function CreateSequenceModal({
@@ -30,7 +31,11 @@ export default function CreateSequenceModal({
     if (status === 201) {
       close();
       form.reset();
-      alert("Sequence added successfully");
+      notifications.show({
+        title: "Success",
+        message: "Sequence added",
+        color: "green",
+      });
     }
   }
   return (

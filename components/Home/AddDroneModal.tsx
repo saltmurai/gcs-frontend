@@ -2,10 +2,11 @@ import { AddDroneProp, addDrone, api } from "@/api/api";
 import { Button, Input, Modal, NumberInput } from "@mantine/core";
 import { useForm } from "@mantine/form";
 import { useDisclosure } from "@mantine/hooks";
+import { notifications } from "@mantine/notifications";
 import { Subtitle } from "@tremor/react";
 import { AiFillPlusCircle } from "react-icons/ai";
 
-export default function AddDroneModal() {
+export default function AddDroneModal({ refetch }: { refetch: () => void }) {
   const [opened, { open, close }] = useDisclosure(false);
   const form = useForm({
     initialValues: {
@@ -31,12 +32,17 @@ export default function AddDroneModal() {
     if (res.status === 201) {
       close();
       form.reset();
-      alert("Drone added successfully");
+      notifications.show({
+        title: "Success",
+        message: "Drone added",
+        color: "green",
+      });
+      refetch();
     }
   }
   return (
     <>
-      <Modal opened={opened} onClose={close} title="Add a Packages">
+      <Modal opened={opened} onClose={close} title="Add a Drone">
         <div>
           <form onSubmit={form.onSubmit(onSubmit)}>
             <Input.Wrapper id="input-demo" withAsterisk label="Drone Name">

@@ -11,6 +11,7 @@ import { useDisclosure } from "@mantine/hooks";
 import { useForm } from "@mantine/form";
 import { AddPackageProp, addPackage, getUsers } from "@/api/api";
 import { useQuery } from "@tanstack/react-query";
+import { notifications } from "@mantine/notifications";
 
 export default function AddPackages() {
   const [opened, { open, close }] = useDisclosure(false);
@@ -42,7 +43,11 @@ export default function AddPackages() {
     if (res.status === 201) {
       close();
       form.reset();
-      alert("Packages added successfully");
+      notifications.show({
+        title: "Success",
+        message: "Package added",
+        color: "green",
+      });
     }
   }
   return (

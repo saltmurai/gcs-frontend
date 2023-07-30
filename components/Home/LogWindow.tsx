@@ -1,5 +1,6 @@
 // connect to localhost:3002/ws to see the log
 
+import { useLogsContext } from "@/contexts/LogProvider";
 import { use, useEffect, useRef, useState } from "react";
 
 const getClassName = (prefix: string) => {
@@ -16,30 +17,18 @@ const getClassName = (prefix: string) => {
 };
 
 export default function LogWindow() {
-  const [logs, setLogs] = useState(["...Connecting to server"]);
+  const { logs, restartWebSocket } = useLogsContext();
   const divRef = useRef<HTMLDivElement>(null);
   useEffect(() => {
     divRef.current?.scrollTo(0, divRef.current.scrollHeight);
   }, [logs]);
-  useEffect(() => {
-    const ws = new WebSocket(`${process.env.NEXT_PUBLIC_LOG_SERVER_WS}`);
-    ws.onopen = () => {
-      setLogs((prev) => [...prev, "Connected to log server"]);
-    };
-    ws.onmessage = (e) => {
-      setLogs((prev) => [...prev, e.data]);
-    };
-    ws.onclose = () => {
-      setLogs((prev) => [...prev, "Disconnected from log server"]);
-    };
-  }, []);
 
   return (
     <div
       ref={divRef}
       className="w-full h-[calc(48vh)] flex-col flex overflow-scroll rounded-md mb-2 shadow-inner bg-gray-100"
     >
-      {logs.map((log, index) => {
+      {logs.map((log: any, index: any) => {
         const mathes = log.match(/\[(INFO|WARNING|ERROR)\]/g);
         if (mathes) {
           const prefix = mathes[0];

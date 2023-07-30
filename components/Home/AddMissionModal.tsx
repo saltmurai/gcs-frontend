@@ -9,6 +9,7 @@ import { SendMissionRequest } from "@/gen/mission/v1/mission_pb";
 import { Button, Input, Modal, Select } from "@mantine/core";
 import { useForm } from "@mantine/form";
 import { useDisclosure } from "@mantine/hooks";
+import { notifications } from "@mantine/notifications";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { AiFillPlusCircle } from "react-icons/ai";
 
@@ -44,14 +45,18 @@ export default function SendMission() {
     if (status === 201) {
       close();
       form.reset();
-      alert("Mission added successfully");
+      notifications.show({
+        title: "Success",
+        message: "Mission added",
+        color: "green",
+      });
     }
   }
   if (isDroneLoading) return <div>Loading...</div>;
   if (isDroneError) return <div>Error...</div>;
   return (
     <>
-      <Modal opened={opened} onClose={close} title="Send mission">
+      <Modal opened={opened} onClose={close} title="Add mission">
         <form onSubmit={form.onSubmit(onSubmit)}>
           <Input.Wrapper id="input-demo" withAsterisk label="Name">
             <Input
@@ -97,7 +102,7 @@ export default function SendMission() {
             <div>- No Sequences in DB</div>
           )}
           <Button type="submit" className="btn btn-primary btn-md mt-5 ml-auto">
-            Send Mission
+            Confirm
           </Button>
         </form>
       </Modal>
