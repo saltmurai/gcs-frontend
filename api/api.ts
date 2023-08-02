@@ -70,12 +70,15 @@ export const getSequences = async () => {
   const { data } = await api.get("/sequences");
   return data;
 };
+export const deleteSequence = async (id: string) =>
+  api.delete("/sequences", { data: { id } });
 
 export type AddMissionProp = {
   name: string;
   droneID: number;
   packageID: number;
   seqID: number;
+  path: Object;
 };
 
 export const addMission = async (params: AddMissionProp) => {

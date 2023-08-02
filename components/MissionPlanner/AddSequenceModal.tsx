@@ -1,6 +1,6 @@
 import { addSequence } from "@/api/api";
 import { SendMissionRequest } from "@/gen/mission/v1/mission_pb";
-import { Button, Input, Modal } from "@mantine/core";
+import { Button, Group, Input, Modal } from "@mantine/core";
 import { useForm } from "@mantine/form";
 import { useDisclosure } from "@mantine/hooks";
 import { notifications } from "@mantine/notifications";
@@ -56,12 +56,15 @@ export default function CreateSequenceModal({
               {...form.getInputProps("description")}
             />
           </Input.Wrapper>
-          <Button type="submit" className="btn btn-primary btn-md mt-5 ml-auto">
+          <Button type="submit" className="btn btn-primary btn-sm mt-5 ml-auto">
             Create sequence
           </Button>
         </form>
       </Modal>
-      <div className="btn w-1/3 self-center bg-blue-500" onClick={open}>
+      <div
+        className="btn w-1/3 no-animation hover:bg-blue-600 self-center bg-blue-500"
+        onClick={open}
+      >
         Create Sequence
       </div>
     </>

@@ -23,22 +23,32 @@ export default function Container() {
             {/* Topbar */}
             <div className="flex bg-white h-12 items-center p-2 rounded-md">
               <GiDeliveryDrone color="black" size={32} />
-              <div className="tabs flex-1 ml-5	">
-                <div className="tab" onClick={() => setActiveTab("Home")}>
+              <div className="tabs flex-1 ml-5">
+                <div
+                  className={`tab text-lg tab-bordered ${
+                    activeTab === "Home" && "tab-active"
+                  }`}
+                  onClick={() => setActiveTab("Home")}
+                >
                   Home
                 </div>
                 <div
-                  className="tab"
+                  className={`tab text-lg tab-bordered
+									${activeTab === "Sequence Planner" && "tab-active"}`}
                   onClick={() => setActiveTab("Sequence Planner")}
                 >
                   Sequence Planner
                 </div>
-                <div className="tab" onClick={() => setActiveTab("Packages")}>
+                <div
+                  className={`tab text-lg tab-bordered ${
+                    activeTab === "Packages" && "tab-active"
+                  }`}
+                  onClick={() => setActiveTab("Packages")}
+                >
                   Packages
                 </div>
               </div>
               <div className="flex items-center gap-2">
-                <div>Admin</div>
                 <div className="avatar">
                   <div className="w-9 rounded-full">
                     <img src="/avatar.png" alt="Avatar" />

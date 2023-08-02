@@ -2,6 +2,7 @@ import { Button, Group, Input, Modal, NumberInput } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
 import CordinatePicker from "./CordinatePicker";
 import { vector3 } from "@/gen/mission/v1/mission_pb";
+import { TbMapSearch } from "react-icons/tb";
 
 type point = 1 | 2 | 3 | 4;
 
@@ -40,9 +41,12 @@ export default function CordinatePickerModal({
           </div>
         </div>
       </Modal>
-      <Group position="center">
-        <button className="btn btn-primary btn-md" onClick={open}>
-          Choose from map
+      <Group position="left">
+        <button
+          className="btn btn-primary btn-sm btn-outline flex gap-2"
+          onClick={open}
+        >
+          <TbMapSearch size={20} /> Choose from map
         </button>
       </Group>
     </>

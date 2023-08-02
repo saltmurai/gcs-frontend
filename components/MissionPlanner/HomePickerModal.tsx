@@ -10,6 +10,7 @@ import "maplibre-gl/dist/maplibre-gl.css";
 import maplibregl from "maplibre-gl";
 import { useState } from "react";
 import { AiFillHome } from "react-icons/ai";
+import { TbMapSearch } from "react-icons/tb";
 import { InitInstruction } from "@/gen/mission/v1/mission_pb";
 
 type Point = {
@@ -110,9 +111,12 @@ export default function HomePickerModal({
           </div>
         </div>
       </Modal>
-      <Group position="center">
-        <button className="btn btn-primary btn-md" onClick={open}>
-          Choose from map
+      <Group position="left" className="mb-2">
+        <button
+          className="btn btn-primary btn-sm btn-outline flex gap-2"
+          onClick={open}
+        >
+          <TbMapSearch size={20} /> Choose from map
         </button>
       </Group>
     </>

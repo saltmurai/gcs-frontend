@@ -1,4 +1,5 @@
 import { getPackages } from "@/api/api";
+import { Table } from "@mantine/core";
 import { useQuery } from "@tanstack/react-query";
 import { HashLoader } from "react-spinners";
 
@@ -20,17 +21,17 @@ export default function PackagesTable() {
   }
   return (
     <div className="overflow-x-auto mt-5">
-      <table className="table w-full">
+      <Table withBorder withColumnBorders striped highlightOnHover>
         {/* head */}
         <thead>
           <tr>
             <th>ID</th>
             <th>Name</th>
-            <th>Weight</th>
-            <th>Height</th>
-            <th>Length</th>
-            <th>Sender</th>
-            <th>Receiver</th>
+            <th>Weight(kg)</th>
+            <th>Height(m)</th>
+            <th>Length(m)</th>
+            <th>Sender Name</th>
+            <th>Receiver Name</th>
           </tr>
         </thead>
         <tbody>
@@ -49,7 +50,7 @@ export default function PackagesTable() {
             );
           })}
         </tbody>
-      </table>
+      </Table>
     </div>
   );
 }

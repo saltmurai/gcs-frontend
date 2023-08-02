@@ -1,15 +1,15 @@
 import { SequenceItem } from "@/gen/mission/v1/mission_pb";
-import { Code } from "@mantine/core";
 import { Handle, Node, NodeProps, Position } from "reactflow";
+import { Code } from "@mantine/core";
 
 type NodeData = {
   label: string;
-  value?: SequenceItem;
+  value?: any;
 };
 
 export type CustomNode = Node<NodeData>;
 
-export default function MyCustomNode({ data }: NodeProps<NodeData>) {
+export default function SequenceViewer({ data }: NodeProps<NodeData>) {
   return (
     <div className="w-76 h-96 rounded-md border-2 border-blue-200 shadow-md py-0 nodrag cursor-default">
       <div className="w-full bg-blue-400 font-semibold text-white text-xl h-8 flex items-center justify-center">
@@ -25,9 +25,7 @@ export default function MyCustomNode({ data }: NodeProps<NodeData>) {
       />
 
       <div className="max-h-[90%] overflow-scroll text-xs">
-        <Code block>
-          {JSON.stringify(data.value?.sequence.value?.toJson(), null, 2)}
-        </Code>
+        <Code block>{JSON.stringify(data.value, null, 2)}</Code>
       </div>
       <Handle
         type="source"

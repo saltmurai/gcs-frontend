@@ -2,6 +2,7 @@
 
 import { useLogsContext } from "@/contexts/LogProvider";
 import { use, useEffect, useRef, useState } from "react";
+import { TfiReload } from "react-icons/tfi";
 
 const getClassName = (prefix: string) => {
   switch (prefix) {
@@ -26,7 +27,7 @@ export default function LogWindow() {
   return (
     <div
       ref={divRef}
-      className="w-full h-[calc(48vh)] flex-col flex overflow-scroll rounded-md mb-2 shadow-inner bg-gray-100"
+      className="w-full h-[calc(50vh)] flex-col flex overflow-scroll rounded-md mb-2 shadow-inner bg-gray-100"
     >
       {logs.map((log: any, index: any) => {
         const mathes = log.match(/\[(INFO|WARNING|ERROR)\]/g);

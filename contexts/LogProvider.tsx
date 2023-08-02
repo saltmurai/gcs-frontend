@@ -11,16 +11,18 @@ type WebSocketContextType = {
   socket: any;
   logs: any;
   restartWebSocket: () => void;
+  clearLogs: () => void;
 };
 const WebSocketContext = createContext<WebSocketContextType>({
   socket: null,
   logs: null,
   restartWebSocket: () => {},
+  clearLogs: () => {},
 });
 
 const WebSocketProvider = ({ children }: { children: ReactNode }) => {
   const [socket, setSocket] = useState<any>(null);
-  const [logs, setLogs] = useState(["Connecting to Logs Server..."]);
+  const [logs, setLogs] = useState([`Connecting...`]);
   useEffect(() => {
     const newSocket = new WebSocket(`${process.env.NEXT_PUBLIC_LOG_SERVER_WS}`);
 
@@ -30,9 +32,11 @@ const WebSocketProvider = ({ children }: { children: ReactNode }) => {
         message: "Logs server websocket connected",
         color: "blue",
       });
+      setLogs((prev) => [...prev, `Connected`]);
     };
     newSocket.onmessage = (e) => {
-      setLogs((prev) => [...prev, e.data]);
+      const timestamp = new Date().toLocaleTimeString();
+      setLogs((prev) => [...prev, ` ${timestamp} - ${e.data}`]);
     };
     newSocket.onclose = () => {
       notifications.show({
@@ -52,11 +56,6 @@ const WebSocketProvider = ({ children }: { children: ReactNode }) => {
   const restartWebSocket = () => {
     if (socket) {
       socket.close();
-      notifications.show({
-        title: "Logs Server Disconnected",
-        message: "Logs server websocket disconnected",
-        color: "red",
-      });
     }
     // timeout to allow socket to close
     notifications.show({
@@ -66,23 +65,32 @@ const WebSocketProvider = ({ children }: { children: ReactNode }) => {
     });
     setTimeout(() => {
       console.log("restarting");
-      const newSocket = new WebSocket(`${process.env.NEXT_PUBLIC_MAVLINK_WS}`);
+      const newSocket = new WebSocket(
+        `${process.env.NEXT_PUBLIC_LOG_SERVER_WS}`
+      );
       newSocket.onopen = () => {
         notifications.show({
-          title: "Logs server Connected",
+          title: "Logs Server Connected",
           message: "Logs server websocket connected",
           color: "blue",
         });
+        setLogs((prev) => [...prev, `Reconnected`]);
       };
       newSocket.onmessage = (e) => {
-        setLogs((prev) => [...prev, e.data]);
+        const timestamp = new Date().toLocaleTimeString();
+        setLogs((prev) => [...prev, ` ${timestamp} - ${e.data}`]);
       };
       setSocket(newSocket);
-    }, 3000);
+    }, 1000);
+  };
+  const clearLogs = () => {
+    setLogs([]);
   };
 
   return (
-    <WebSocketContext.Provider value={{ socket, restartWebSocket, logs }}>
+    <WebSocketContext.Provider
+      value={{ socket, restartWebSocket, logs, clearLogs }}
+    >
       {children}
     </WebSocketContext.Provider>
   );

@@ -37,7 +37,7 @@ export default function MultiInput({
           />
           <input
             type="text"
-            placeholder="height"
+            placeholder="altitude"
             className="input input-bordered input-sm"
             name={`${id}-p3`}
             onChange={onChange}

@@ -1,4 +1,4 @@
-import { MdOutlineNavigation } from "react-icons/md";
+import { MdNavigation } from "react-icons/md";
 import Map, { Marker, Source, Layer } from "react-map-gl";
 import convertToGeoJSON from "@/utils/map";
 import React, { useState } from "react";
@@ -9,7 +9,7 @@ import { useTelemetryContext } from "@/contexts/TelemetryProvider";
 import { TfiReload } from "react-icons/tfi";
 import { Menu, Select } from "@mantine/core";
 
-const colors = ["red", "yellow", "amber", "yellow", "green"];
+const colors = ["red", "green", "amber", "yellow", "green"];
 
 const DroneMarker = ({
   size = 50,
@@ -21,7 +21,7 @@ const DroneMarker = ({
   rotation?: number;
 }) => {
   return (
-    <MdOutlineNavigation
+    <MdNavigation
       size={size}
       className={`text-${color}-500`}
       style={{
@@ -32,15 +32,8 @@ const DroneMarker = ({
   );
 };
 
-const coordinates = [
-  [8.5455939, 47.397742],
-  [8.5555939, 47.407742],
-  [8.5455939, 47.387742],
-];
-
-const geoJSON = convertToGeoJSON(coordinates);
 const DroneMap = () => {
-  const { socket, restartWebSocket } = useTelemetryContext();
+  const { socket, restartWebSocket, mission_items } = useTelemetryContext();
   const [choosenDrone, setChoosenDrone] = useState(0);
   const { data, isLoading } = useQuery(["activeDrone"], getActiveDrones, {
     refetchInterval: 1000,
@@ -50,6 +43,7 @@ const DroneMap = () => {
     socket?.send(
       JSON.stringify({
         action: action,
+        drone_id: data[choosenDrone].ID,
         system_address: data[choosenDrone].Address,
         port: data[choosenDrone].Port,
       })
@@ -134,6 +128,12 @@ const DroneMap = () => {
 
               <Menu.Dropdown>
                 <Menu.Item onClick={() => sendAction("arm")}>Arm</Menu.Item>
+                <Menu.Item onClick={() => sendAction("start_mission")}>
+                  Start Mission
+                </Menu.Item>
+                <Menu.Item onClick={() => sendAction("download_mission")}>
+                  Download Mission
+                </Menu.Item>
                 <Menu.Item onClick={() => sendAction("disarm")}>
                   Disarm
                 </Menu.Item>
@@ -151,11 +151,53 @@ const DroneMap = () => {
                 <Menu.Item color="red" onClick={() => sendAction("land")}>
                   Land
                 </Menu.Item>
+                <Menu.Item color="red" onClick={() => sendAction("kill")}>
+                  Kill
+                </Menu.Item>
+                <Menu.Item color="red" onClick={() => sendAction("reboot")}>
+                  Reboot
+                </Menu.Item>
               </Menu.Dropdown>
             </Menu>
           </div>
         </div>
       );
+    }
+  }
+  function renderGeoJSON() {
+    if (mission_items.length > 0) {
+      return mission_items.map((mission_item: any) => {
+        const { mission_items } = mission_item;
+        return (
+          <Source
+            key={mission_item.drone_id}
+            type="geojson"
+            data={convertToGeoJSON(JSON.parse(mission_items))}
+          >
+            <Layer
+              type="line"
+              paint={{
+                "line-color": "#ff7e82",
+                "line-width": 4,
+                "line-dasharray": [2, 2],
+                "line-opacity": 0.8,
+              }}
+              filter={["==", "$type", "LineString"]}
+            />
+            <Layer
+              type="circle"
+              paint={{
+                "circle-radius": 3,
+                "circle-color": "blue",
+                "circle-opacity": 0.8,
+                "circle-stroke-color": "blue",
+                "circle-stroke-width": 2,
+              }}
+              filter={["==", "$type", "Point"]}
+            />
+          </Source>
+        );
+      });
     }
   }
   return (
@@ -173,31 +215,7 @@ const DroneMap = () => {
       {/* <Marker longitude={longitude} latitude={latitude}>
         <DroneMarker />
       </Marker> */}
-      <Source id="drone" type="geojson" data={geoJSON}>
-        <Layer
-          id="drone"
-          type="line"
-          paint={{
-            "line-color": "#ff7e82",
-            "line-width": 4,
-            "line-dasharray": [2, 2],
-            "line-opacity": 0.8,
-          }}
-          filter={["==", "$type", "LineString"]}
-        />
-        <Layer
-          id="point"
-          type="circle"
-          paint={{
-            "circle-radius": 3,
-            "circle-color": "blue",
-            "circle-opacity": 0.8,
-            "circle-stroke-color": "blue",
-            "circle-stroke-width": 2,
-          }}
-          filter={["==", "$type", "Point"]}
-        />
-      </Source>
+      {renderGeoJSON()}
       <div className="absolute top-0 right-0">
         <div
           className="btn btn-sm opacity-50 rounded-xl"

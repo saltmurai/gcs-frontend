@@ -11,6 +11,7 @@ import { init } from "next/dist/compiled/@vercel/og/satori";
 import { parse } from "path";
 import { useMission } from "./MissionContext";
 import CordinatePickerModal from "./CordinatePickerModal";
+import { AiOutlineFileAdd } from "react-icons/ai";
 
 const plannerOptions = [
   {
@@ -202,7 +203,11 @@ export default function TravelParam() {
       </div>
       <label>Constrains</label>
       <MultiInput key={"1"} id="1" onChange={constrainsOnChange} />
-      <div className={`btn w-16 mt-12 ml-auto`} onClick={addToMission}>
+      <div
+        className={`btn mt-12 ml-auto btn-sm flex gap-2 no-animation bg-blue-500`}
+        onClick={addToMission}
+      >
+        <AiOutlineFileAdd size={20} />
         ADD
       </div>
     </div>

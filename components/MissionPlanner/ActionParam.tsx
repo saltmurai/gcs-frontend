@@ -12,6 +12,7 @@ import {
 import { useState } from "react";
 import { useImmer } from "use-immer";
 import { useMission } from "./MissionContext";
+import { AiOutlineFileAdd } from "react-icons/ai";
 
 const actionOptions = [
   {
@@ -134,7 +135,11 @@ export default function ActionParam() {
         }`}
         onChange={OnInputParam}
       />
-      <div className={`btn w-16 mt-12 ml-auto`} onClick={addToMission}>
+      <div
+        className={`btn mt-12 ml-auto btn-sm flex gap-2 no-animation bg-blue-500`}
+        onClick={addToMission}
+      >
+        <AiOutlineFileAdd size={20} />
         ADD
       </div>
     </div>

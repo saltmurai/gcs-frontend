@@ -40,6 +40,7 @@ export default function SendMission() {
       droneID: Number(values.droneID),
       packageID: Number(values.packageID),
       seqID: Number(values.sequenceID),
+      path: {},
     };
     const { status } = await addMission(params);
     if (status === 201) {

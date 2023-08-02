@@ -4,7 +4,7 @@ import { useMission } from "./MissionContext";
 import TravelParam from "./TravelPram";
 import ActionParam from "./ActionParam";
 import client from "@/gRPC/client";
-import { Button } from "@mantine/core";
+import { Button, Divider } from "@mantine/core";
 import CreateSequenceModal from "./AddSequenceModal";
 
 const actionList = ["Init", "Travel", "Action"];
@@ -36,14 +36,16 @@ export default function UIConfig() {
               </option>
             ))}
           </select>
+          <Divider size={"sm"} className="mt-4" />
           {actionType === "Init" && <InitParam />}
           {actionType === "Travel" && <TravelParam />}
           {actionType === "Action" && <ActionParam />}
         </div>
+        <Divider size={"sm"} className="mb-2" />
         <div className="flex justify-around">
           <CreateSequenceModal mission={mission} />
           <div
-            className="btn w-1/3 self-center bg-red-300"
+            className="btn w-1/3 self-center bg-red-500 hover:bg-red-600"
             onClick={() => dispatch({ type: "remove" })}
           >
             Clear Sequence

@@ -15,6 +15,7 @@ import { Divider } from "@tremor/react";
 import { useMission } from "./MissionContext";
 import HomePickerModal from "./HomePickerModal";
 import MultiInput from "./MultiInput";
+import { AiOutlineFileAdd } from "react-icons/ai";
 
 const animatedComponents = makeAnimated();
 const PeripheralOptions = [
@@ -174,7 +175,11 @@ export default function InitParam() {
         className="mt-2"
       />
 
-      <div className={`btn w-16 mt-12 ml-auto`} onClick={addToMission}>
+      <div
+        className={`btn mt-12 ml-auto btn-sm flex gap-2 no-animation bg-blue-500`}
+        onClick={addToMission}
+      >
+        <AiOutlineFileAdd size={20} />
         ADD
       </div>
     </div>
