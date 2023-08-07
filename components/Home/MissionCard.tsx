@@ -34,6 +34,11 @@ export function MissionCard({
     await deleteMission(props.ID);
     refetch();
   };
+
+  const handleStartMission = async () => {
+    await confirmMission({ id: props.ID, flag: "FLAG_START" });
+    refetch();
+  };
   const handleViewImage = async () => {
     try {
       const res = await getImagesPath(props.ID);
@@ -107,7 +112,7 @@ export function MissionCard({
               <Menu.Label>Mission menu</Menu.Label>
               <Menu.Item
                 icon={<GiCheckMark size={14} />}
-                onClick={handleSendMission}
+                onClick={handleStartMission}
               >
                 Start mission
               </Menu.Item>

@@ -13,7 +13,7 @@ import { notifications } from "@mantine/notifications";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { AiFillPlusCircle } from "react-icons/ai";
 
-export default function SendMission() {
+export default function SendMission({ refetch }: { refetch: () => void }) {
   const [opened, { open, close }] = useDisclosure(false);
   const queryClient = useQueryClient();
   const {
@@ -46,6 +46,7 @@ export default function SendMission() {
     if (status === 201) {
       close();
       form.reset();
+      refetch();
       notifications.show({
         title: "Success",
         message: "Mission added",

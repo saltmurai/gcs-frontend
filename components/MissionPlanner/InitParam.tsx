@@ -1,27 +1,22 @@
 import { useEffect, useState } from "react";
 import {
-  ActionInstruction,
   InitInstruction,
-  TravelInstruction,
   SequenceItem,
   Controller,
   Termination,
-  SendMissionRequest,
 } from "../../gen/mission/v1/mission_pb";
 import Select, { MultiValue } from "react-select";
-import makeAnimated from "react-select/animated";
-import { init } from "next/dist/compiled/@vercel/og/satori";
-import { Divider } from "@tremor/react";
 import { useMission } from "./MissionContext";
 import HomePickerModal from "./HomePickerModal";
 import MultiInput from "./MultiInput";
 import { AiOutlineFileAdd } from "react-icons/ai";
 
-const animatedComponents = makeAnimated();
 const PeripheralOptions = [
-  { value: 1, label: "Camera" },
-  { value: 2, label: "LiDAR" },
-  { value: 3, label: "GPS" },
+  { value: 1, label: "Camera Forward" },
+  { value: 2, label: "Camera Downward" },
+  { value: 3, label: "LiDAR" },
+  { value: 4, label: "Camera Odom" },
+  { value: 5, label: "FCU" },
 ];
 
 const ControllerOptions = [

@@ -33,7 +33,7 @@ export default function MissionTab() {
 
   return (
     <>
-      <SendMission />
+      <SendMission refetch={refetch} />
       <div className="flex border h-[25vh] overflow-scroll shadow-inner bg-gray-100 rounded-lg py-2 flex-col gap-2 px-2 mt-2 w-full">
         {rendersMission()}
       </div>

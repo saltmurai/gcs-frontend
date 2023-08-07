@@ -201,8 +201,8 @@ export default function TravelParam() {
           />
         </div>
       </div>
-      <label>Constrains</label>
-      <MultiInput key={"1"} id="1" onChange={constrainsOnChange} />
+      {/* <label>Constrains</label>
+      <MultiInput key={"1"} id="1" onChange={constrainsOnChange} /> */}
       <div
         className={`btn mt-12 ml-auto btn-sm flex gap-2 no-animation bg-blue-500`}
         onClick={addToMission}

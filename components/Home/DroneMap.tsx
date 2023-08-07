@@ -8,6 +8,7 @@ import { getActiveDrones, resetDrones } from "@/api/api";
 import { useTelemetryContext } from "@/contexts/TelemetryProvider";
 import { TfiReload } from "react-icons/tfi";
 import { Menu, Select } from "@mantine/core";
+import { notifications } from "@mantine/notifications";
 
 const colors = ["red", "green", "amber", "yellow", "green"];
 
@@ -168,6 +169,10 @@ const DroneMap = () => {
     if (mission_items.length > 0) {
       return mission_items.map((mission_item: any) => {
         const { mission_items } = mission_item;
+        console.log(mission_items);
+        if (JSON.parse(mission_items).length === 0) {
+          return <></>;
+        }
         return (
           <Source
             key={mission_item.drone_id}
@@ -203,9 +208,9 @@ const DroneMap = () => {
   return (
     <Map
       initialViewState={{
-        longitude: 8.545593799999999,
-        latitude: 47.3977419,
-        zoom: 20,
+        longitude: 105.843108,
+        latitude: 21.00586,
+        zoom: 18,
       }}
       mapStyle={"mapbox://styles/mapbox/light-v11"}
       mapboxAccessToken="pk.eyJ1Ijoic2FsdG11cmFpIiwiYSI6ImNsaTJ6cmE3bDJjbnEzY213ZTMwNWdkOGcifQ.c7JQWGP9Ak1a7t9OzQa89g"
