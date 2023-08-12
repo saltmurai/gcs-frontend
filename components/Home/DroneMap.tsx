@@ -138,6 +138,7 @@ const DroneMap = () => {
                 <Menu.Item onClick={() => sendAction("disarm")}>
                   Disarm
                 </Menu.Item>
+                <Menu.Item onClick={() => sendAction("hold")}>Hold</Menu.Item>
                 <Menu.Item onClick={() => sendAction("takeoff")}>
                   Takeoff
                 </Menu.Item>
