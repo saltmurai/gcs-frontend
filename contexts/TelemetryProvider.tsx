@@ -6,6 +6,7 @@ import React, {
   ReactNode,
 } from "react";
 import { notifications } from "@mantine/notifications";
+import { useLogsContext } from "./LogProvider";
 
 type WebSocketContextType = {
   socket: any;
@@ -20,6 +21,7 @@ const WebSocketContext = createContext<WebSocketContextType>({
 
 const WebSocketProvider = ({ children }: { children: ReactNode }) => {
   const [socket, setSocket] = useState<any>(null);
+  const { appendLogs } = useLogsContext();
   const [mission_items, setMissionItems] = useState<any[]>([]);
 
   useEffect(() => {
@@ -56,6 +58,9 @@ const WebSocketProvider = ({ children }: { children: ReactNode }) => {
           newMissionItems[index] = data;
           return newMissionItems;
         });
+      }
+      if (data.type === "staus_text") {
+        appendLogs(data.data);
       }
     };
 

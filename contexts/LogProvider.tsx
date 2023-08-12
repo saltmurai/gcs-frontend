@@ -12,12 +12,14 @@ type WebSocketContextType = {
   logs: any;
   restartWebSocket: () => void;
   clearLogs: () => void;
+  appendLogs: (log: string) => void;
 };
 const WebSocketContext = createContext<WebSocketContextType>({
   socket: null,
   logs: null,
   restartWebSocket: () => {},
   clearLogs: () => {},
+  appendLogs: () => {},
 });
 
 const WebSocketProvider = ({ children }: { children: ReactNode }) => {
@@ -86,10 +88,14 @@ const WebSocketProvider = ({ children }: { children: ReactNode }) => {
   const clearLogs = () => {
     setLogs([]);
   };
+  const appendLogs = (log: string) => {
+    const timestamp = new Date().toLocaleTimeString();
+    setLogs((prev: any) => [...prev, ` ${timestamp} - ${log}`]);
+  };
 
   return (
     <WebSocketContext.Provider
-      value={{ socket, restartWebSocket, logs, clearLogs }}
+      value={{ socket, restartWebSocket, logs, clearLogs, appendLogs }}
     >
       {children}
     </WebSocketContext.Provider>

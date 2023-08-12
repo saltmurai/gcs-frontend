@@ -17,8 +17,8 @@ export default function Container() {
 
   return (
     <>
-      <TelemetryProvider>
-        <LogsProvider>
+      <LogsProvider>
+        <TelemetryProvider>
           <div className="min-h-screen min-w-screen p-2 bg-slate-200 flex gap-2 flex-col">
             {/* Topbar */}
             <div className="flex bg-white h-12 items-center p-2 rounded-md">
@@ -62,8 +62,8 @@ export default function Container() {
               {activeTab === "Packages" && <Packages />}
             </>
           </div>
-        </LogsProvider>
-      </TelemetryProvider>
+        </TelemetryProvider>
+      </LogsProvider>
     </>
   );
 }
