@@ -36,7 +36,7 @@ export function MissionCard({
   };
 
   const handleStartMission = async () => {
-    await confirmMission({ id: props.ID, flag: "FLAG_START" });
+    await confirmMission({ id: props.ID, flag: "FLAG_ALLOW_TO_FLY" });
     refetch();
   };
   const handleViewImage = async () => {
@@ -65,7 +65,7 @@ export function MissionCard({
 
   const handleConfirm = async () => {
     try {
-      await confirmMission({ id: props.ID, flag: "FLAG_CONFIRM" });
+      await confirmMission({ id: props.ID, flag: "FLAG_CAM_ALLOW" });
       refetch();
       close();
     } catch (error) {
@@ -79,7 +79,7 @@ export function MissionCard({
 
   const handleReject = async () => {
     try {
-      await confirmMission({ id: props.ID, flag: "FLAG_REJECT" });
+      await confirmMission({ id: props.ID, flag: "FLAG_CAM_REJECT" });
       refetch();
       close();
     } catch (error) {
