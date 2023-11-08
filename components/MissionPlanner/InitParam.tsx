@@ -12,8 +12,8 @@ import MultiInput from "./MultiInput";
 import { AiOutlineFileAdd } from "react-icons/ai";
 
 const PeripheralOptions = [
-  { value: 1, label: "Camera Forward" },
-  { value: 2, label: "Camera Downward" },
+  { value: 1, label: "Camera FLIR" },
+  { value: 2, label: "Camera D455" },
   { value: 3, label: "LiDAR" },
   { value: 4, label: "Camera Odom" },
   { value: 5, label: "FCU" },
